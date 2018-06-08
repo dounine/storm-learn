@@ -1,0 +1,6 @@
+rootProject.name = 'storm-learn'
+
+include ':word-count'
+project(':word-count').projectDir = new File(rootProject.projectDir, './word-count')
+
+

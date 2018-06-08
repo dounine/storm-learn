@@ -1,0 +1,56 @@
+version = '0.0.1-SNAPSHOT'
+
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+	ext{
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+group 'com.dounine.storm_learn'
+apply plugin: "io.spring.dependency-management"
+sourceCompatibility = 1.8
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+ext {
+	springCloudVersion = 'Dalston.SR2'
+}
+configurations {
+	provided
+}
+
+sourceSets {
+	main {
+		compileClasspath += configurations.provided
+	}
+}
+
+jar {
+	manifest {
+		attributes 'Implementation-Title': 'Gradle Quickstart',
+				'Implementation-Version': version,
+				'Main-Class': 'com.dounine.storm_learn.wc.Application'
+	}
+}
+dependencies {
+// https://mvnrepository.com/artifact/org.apache.storm/storm-core
+	provided group: 'org.apache.storm', name: 'storm-core', version: '1.2.2'
+}
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
